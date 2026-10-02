@@ -56,4 +56,4 @@ keeps the terms of the sources above.
 ## What I'd improve
 
 I'd re-check the 2015 to 2021 numbers against the original NCRB reports, add NFHS help-seeking figures if they ever
-show up in the NFHS-6 tables, and test on a real iPhone (I only tried Chromium with an iPhone user agent).
+show up in the NFHS-6 tables.
