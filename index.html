@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Women's Safety Insights - India data explorer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="State-wise crimes against women registered in India 2015-2024, NFHS-6 survey context, a world comparison and verified helplines. A personal portfolio project.">
+  <meta name="theme-color" content="#34123f">
+  <meta name="color-scheme" content="light dark">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/favicon-32.png" sizes="32x32">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Safety Insights">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="top">
+    <div class="brand">
+      <img src="icons/icon-192.png" alt="" width="36" height="36">
+      <div>
+        <h1>Women's Safety Insights</h1>
+        <p>Personal project &middot; NCRB 2015-2024 &middot; NFHS-6 &middot; World</p>
+      </div>
+    </div>
+    <nav class="tabs" id="tabs" aria-label="Sections">
+      <button data-tab="overview" aria-selected="true"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 20V10m6 10V4m6 16v-7m4 7H2"/></svg><span>Overview</span></button>
+      <button data-tab="states" aria-selected="false"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"/></svg><span>States</span></button>
+      <button data-tab="world" aria-selected="false"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg><span>World</span></button>
+      <button data-tab="compare" aria-selected="false"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 17l5-6 4 4 8-9"/></svg><span>Compare</span></button>
+      <button data-tab="updates" aria-selected="false"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 5h16v14H4zM8 9h8M8 13h8M8 16h4"/></svg><span>Updates</span></button>
+      <button data-tab="help" aria-selected="false"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg><span>Help</span></button>
+      <button data-tab="about" aria-selected="false"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg><span>About</span></button>
+    </nav>
+  </header>
+
+  <div class="urgent" role="note">
+    In immediate danger? Call <a href="tel:112">112</a>. Women Helpline: <a href="tel:181">181</a>.
+  </div>
+
+  <main id="main">
+    <section id="tab-overview" class="panel" aria-labelledby="h-overview">
+      <h2 id="h-overview" data-kicker="The numbers">Ten years of registered cases</h2>
+      <p class="deck">What police in India have registered as crimes against women since 2015, and what those figures can and cannot show.</p>
+      <div class="kpis" id="kpis"></div>
+
+      <article class="card">
+        <div class="card-head">
+          <h3>Registered cases over time</h3>
+          <label class="inline">Category
+            <select id="trend-head"></select>
+          </label>
+        </div>
+        <p class="note" id="trend-note"></p>
+        <div class="chart-box"><canvas id="trend-chart" role="img" aria-label="Registered cases and rate per 100,000 women by year"></canvas></div>
+        <details class="data-table">
+          <summary>Show these numbers as a table</summary>
+          <div id="trend-table"></div>
+        </details>
+        <p class="source">Source: NCRB, Crime in India. Rates use projected female population.</p>
+      </article>
+
+      <article class="card">
+        <div class="card-head">
+          <h3>What is being registered</h3>
+          <label class="inline">Year
+            <select id="mix-year"></select>
+          </label>
+        </div>
+        <div class="chart-box tall"><canvas id="mix-chart" role="img" aria-label="Share of registered cases by crime category"></canvas></div>
+        <p class="note">Categories are NCRB heads, so shares add up to less than 100% (small heads such as murder with rape are left out). POCSO girl victims are counted separately from IPC/BNS rape from 2017.</p>
+        <p class="source">Source: NCRB, Crime in India.</p>
+      </article>
+
+      <article class="card" id="freshness" aria-labelledby="h-fresh">
+        <div class="card-head">
+          <h3 id="h-fresh">Data freshness</h3>
+          <span class="stamp" id="fresh-stamp"></span>
+        </div>
+        <p class="note" id="fresh-note"></p>
+        <ul class="fresh" id="fresh-list"></ul>
+      </article>
+
+      <aside class="callout">
+        <strong>Read with care.</strong>
+        These are cases <em>registered by police</em>. A higher number can reflect better reporting and
+        registration, not just more violence. See the About tab for what the data cannot tell you.
+      </aside>
+    </section>
+
+    <section id="tab-states" class="panel" hidden aria-labelledby="h-states">
+      <h2 id="h-states" data-kicker="By state">Where cases are registered</h2>
+      <p class="deck">Every state and union territory gets one equal tile, so small places are as visible as large ones.</p>
+      <div class="controls">
+        <label>Year
+          <input type="range" id="year-range" min="0" max="9" step="1" value="9">
+          <output id="year-out" for="year-range">2024</output>
+        </label>
+        <label>Category <select id="state-head"></select></label>
+        <fieldset class="seg" aria-label="Measure">
+          <label><input type="radio" name="metric" value="rate" checked><span>Per 100,000 women</span></label>
+          <label><input type="radio" name="metric" value="cases"><span>Cases</span></label>
+        </fieldset>
+      </div>
+      <p class="note" id="state-note"></p>
+
+      <div class="states-layout">
+        <div>
+          <div class="tilemap" id="tilemap" role="group" aria-label="Tile map of Indian states and union territories"></div>
+          <div class="legend"><span id="leg-min">low</span><i></i><span id="leg-max">high</span></div>
+          <p class="note">Tile positions roughly follow the map of India; every state has the same size. Grey tiles have no data for that year.</p>
+        </div>
+        <div>
+          <article class="card detail" id="detail" aria-live="polite"></article>
+        </div>
+      </div>
+
+      <article class="card">
+        <h3>Ranking</h3>
+        <ol class="rank" id="rank"></ol>
+      </article>
+    </section>
+
+    <section id="tab-world" class="panel" hidden aria-labelledby="h-world">
+      <h2 id="h-world" data-kicker="In context">India among countries</h2>
+      <p class="deck">Modelled estimates of partner violence from the UN SDG database, for 163 countries. They answer a different question from police records, so they sit on their own tab.</p>
+      <div class="kpis" id="world-kpis"></div>
+
+      <article class="card">
+        <div class="card-head">
+          <h3>Partner violence in the past 12 months, women 15-49</h3>
+          <label class="inline">Show
+            <select id="world-view"></select>
+          </label>
+        </div>
+        <p class="note" id="world-view-note"></p>
+        <div class="chart-box tall"><canvas id="world-chart" role="img" aria-label="Estimated share of women aged 15 to 49 who experienced partner violence in the past 12 months, by country"></canvas></div>
+        <p class="source" id="world-source"></p>
+      </article>
+
+      <aside class="callout apart-note" id="world-caveats">
+        <strong>How to read this.</strong>
+        <ul id="world-notes"></ul>
+      </aside>
+
+      <article class="card">
+        <div class="card-head">
+          <h3>All countries</h3>
+          <label class="inline">Find
+            <input type="search" id="world-find" placeholder="Type a country" autocomplete="off">
+          </label>
+        </div>
+        <div class="table-scroll">
+          <table class="sortable" id="world-table">
+            <thead><tr></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <p class="note" id="world-count"></p>
+      </article>
+
+      <article class="card">
+        <h3>Regions</h3>
+        <div class="data-table" id="world-regions"></div>
+        <p class="note">Regional figures are the UN's own aggregates, not averages of the countries listed above.</p>
+      </article>
+
+      <p class="note">Outside India, the <a href="https://findahelpline.com" rel="noopener">Find A Helpline</a> directory lists services in more than 175 countries. For India see the <a href="#help" data-go="help">Get help</a> tab.</p>
+    </section>
+
+    <section id="tab-compare" class="panel" hidden aria-labelledby="h-compare">
+      <h2 id="h-compare" data-kicker="Side by side">Compare states over time</h2>
+      <div class="controls">
+        <label>Category <select id="cmp-head"></select></label>
+        <fieldset class="seg" aria-label="Measure">
+          <label><input type="radio" name="cmetric" value="rate" checked><span>Per 100,000 women</span></label>
+          <label><input type="radio" name="cmetric" value="cases"><span>Cases</span></label>
+        </fieldset>
+      </div>
+      <p class="note">Pick up to four. All India is always shown for reference.</p>
+      <div class="chips" id="cmp-chips"></div>
+      <article class="card">
+        <div class="chart-box tall"><canvas id="cmp-chart" role="img" aria-label="Line chart comparing selected states over time"></canvas></div>
+        <details class="data-table">
+          <summary>Show these numbers as a table</summary>
+          <div id="cmp-table"></div>
+        </details>
+      </article>
+    </section>
+
+    <section id="tab-updates" class="panel" hidden aria-labelledby="h-updates">
+      <h2 id="h-updates" data-kicker="Non-official">Recent updates 2025&ndash;2026 (non-official)</h2>
+      <div class="apart" id="updates-intro" role="note">
+        <p class="apart-tag">Separate from the official series</p>
+        <p id="updates-scope"></p>
+        <ul id="updates-limits"></ul>
+      </div>
+      <div class="chips" id="updates-chips" role="group" aria-label="Filter by topic"></div>
+      <ol class="updates" id="updates-list"></ol>
+      <p class="note" id="updates-note"></p>
+    </section>
+
+    <section id="tab-help" class="panel" hidden aria-labelledby="h-help">
+      <h2 id="h-help" data-kicker="Support">Get help</h2>
+      <p>Official Indian helplines and services. Tap a number to call from a phone. If you think someone is in danger right now, call <a href="tel:112">112</a>.</p>
+      <div class="chips" id="help-chips" role="group" aria-label="Filter by type"></div>
+      <div class="res-grid" id="res-grid"></div>
+      <p class="note" id="res-verified"></p>
+    </section>
+
+    <section id="tab-about" class="panel" hidden aria-labelledby="h-about">
+      <h2 id="h-about" data-kicker="Method and limits">About this project</h2>
+      <article class="card prose">
+        <p>This is a personal portfolio project by Aindrila Das. It builds on an earlier women and child safety app idea and explores what public crime statistics can and cannot say. It is not an official product and is not affiliated with NCRB, the Government of India or any employer.</p>
+        <h3>Data</h3>
+        <ul id="sources"></ul>
+        <p>Rates are cases registered per 100,000 women, using mid-year projected female population. The latest edition, Crime in India 2024 (released 6 May 2026), is the newest official release; there is no 2025 edition yet. Case counts for 2022, 2023 and 2024 were checked against NCRB's own Table 3A.1 and match for every state and UT. Earlier years come from a public compilation of the NCRB tables and reconcile exactly between state and national totals.</p>
+        <h3>What the numbers cannot tell you</h3>
+        <ul>
+          <li><strong>Under-reporting.</strong> Many incidents are never reported or registered. Survey data such as NFHS-6 (22.3% of ever-married women aged 18-49 reported spousal violence at some point) points to far more violence than police records show.</li>
+          <li><strong>Registration practice differs by state.</strong> A state with a high rate may be registering more of what is reported. Sharp one-year swings in some states (see the States tab and the policy brief) are more likely to be administrative than real.</li>
+          <li><strong>Series breaks.</strong> POCSO girl victims are counted from 2017, and rape of minors moved out of IPC rape, so some 2016 to 2017 comparisons are not like for like.</li>
+          <li><strong>Counts are cases, not victims</strong>, and there is no district or individual-level data here by design.</li>
+        </ul>
+        <h3>Three kinds of evidence, kept apart</h3>
+        <ul>
+          <li><strong>Police records</strong> (NCRB): cases registered, Overview, States and Compare.</li>
+          <li><strong>Surveys</strong> (NFHS-6): what women report, shown beside the state detail, never added to the police series.</li>
+          <li><strong>Global estimates</strong> (UN SDG 5.2.1, WHO): modelled, on the World tab, with different definitions.</li>
+          <li><strong>Recent updates</strong> on their own tab are a hand-picked, non-official reading list and feed none of the charts.</li>
+        </ul>
+        <h3>Privacy</h3>
+        <p>The app works offline, collects nothing and sends nothing. Only your last-viewed tab and selections are stored on your own device.</p>
+      </article>
+
+      <article class="card" id="install-card">
+        <h3>Install on your phone</h3>
+        <button id="install-btn" class="btn" hidden>Install app</button>
+        <div id="install-help" class="prose"></div>
+      </article>
+      <p class="note" id="build-note"></p>
+    </section>
+  </main>
+
+  <noscript><p class="note" style="padding:1rem">This dashboard needs JavaScript to draw its charts.</p></noscript>
+
+  <script src="vendor/chart.umd.js"></script>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
